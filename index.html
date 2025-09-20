@@ -1,13 +1,271 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Page</title>
-    <link rel="stylesheet" href="style.css">
-    <body>
-        <h1>Hello, World!</h1>
-        <p>
-            This is a sample paragraph to demonstrate CSS styling.
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shruti Pandey – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:hsl(222 24% 9%);
+      --surface:hsl(222 18% 13%);
+      --card:hsl(222 16% 16%);
+      --text:hsl(210 40% 96%);
+      --text-dim:hsl(215 15% 75%);
+      --muted:hsl(215 14% 34%);
+      --primary:hsl(222 85% 56%);
+      --primary-2:hsl(217 91% 60%);
+      --accent:hsla(222,85%,56%,0.12);
+      --border:hsl(222 16% 22%);
+      --radius:12px;
+      --shadow:0 8px 30px rgba(0,0,0,.25);
+      --container:1200px;
+      --header-h:68px;
+      --space:clamp(2.5rem, 2vw + 2rem, 4rem);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.6;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--container); margin-inline:auto; padding-inline:24px}
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:10px;
+      border:1px solid var(--border); color:var(--text); background:transparent;
+    }
+    .btn.primary{background:var(--primary); border-color:transparent; color:white; box-shadow:var(--shadow)}
+    .btn:hover{transform:translateY(-2px)}
+    header{
+      position:sticky; top:0; z-index:50; height:var(--header-h);
+      backdrop-filter:saturate(140%) blur(8px);
+      background:color-mix(in oklab, transparent 70%, var(--surface));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; height:100%}
+    .brand{display:inline-flex; align-items:center; gap:.6rem; font-weight:700; letter-spacing:.2px}
+    .dot{height:26px; width:26px; border-radius:8px; background:var(--accent); display:grid; place-items:center; border:1px solid var(--border)}
+    .dot span{height:8px; width:8px; border-radius:99px; background:var(--primary)}
+    .links{display:flex; gap:1rem; font-size:.95rem}
+    .links a{padding:.5rem .7rem; border-radius:8px; color:var(--text-dim)}
+    .links a:hover{background:rgba(255,255,255,.04); color:var(--text)}
+    section{scroll-margin-top:calc(var(--header-h) + 16px); padding-block:var(--space)}
+    .hero{
+      position:relative; overflow:hidden; padding-block:calc(var(--space) + 1rem);
+      background:
+        radial-gradient(60% 60% at 80% -20%, color-mix(in oklab, var(--primary) 20%, transparent) 0%, transparent 60%),
+        radial-gradient(40% 40% at -10% 10%, color-mix(in oklab, var(--primary) 16%, transparent) 0%, transparent 55%);
+    }
+    .hero-grid{display:grid; gap:2rem; align-items:center}
+    @media(min-width:900px){ .hero-grid{grid-template-columns:1.15fr .85fr} }
+    .eyebrow{color:var(--text-dim); font-weight:600; letter-spacing:.08em; text-transform:uppercase; font-size:.8rem}
+    h1{font-size:clamp(2rem, 3vw + 1rem, 3.5rem); line-height:1.15; margin:.5rem 0 0; font-weight:800}
+    .lede{color:var(--text-dim); max-width:58ch; margin-top:1rem}
+    .cta{display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1.25rem}
+    .portrait-wrap{
+      margin-inline:auto; width:min(72vw, 320px); aspect-ratio:1/1; position:relative;
+    }
+    .portrait-glow{
+      position:absolute; inset:-8%; border-radius:999px;
+      background:radial-gradient(closest-side, color-mix(in oklab, var(--primary) 55%, transparent), transparent 70%);
+      filter:blur(22px);
+    }
+    .portrait{
+      position:relative; border-radius:999px; padding:8px; background:linear-gradient(180deg, color-mix(in oklab, var(--primary) 30%, transparent), transparent);
+      border:1px solid var(--border); box-shadow:var(--shadow);
+    }
+    .portrait img{border-radius:999px; width:100%; height:100%; object-fit:cover}
+    .section-title{font-size:1.6rem; font-weight:700; margin:0 0 1.2rem}
+    .muted{color:var(--text-dim)}
+    /* Skills */
+    .skills{display:grid; grid-template-columns:repeat(2,1fr); gap:.6rem}
+    @media(min-width:640px){ .skills{grid-template-columns:repeat(3,1fr)} }
+    @media(min-width:960px){ .skills{grid-template-columns:repeat(6,1fr)} }
+    .chip{
+      background:var(--card); border:1px solid var(--border); padding:.55rem .8rem; border-radius:10px; color:var(--text-dim); text-align:center;
+    }
+    .band{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border-top:1px solid var(--border); border-bottom:1px solid var(--border)}
+    /* Achievements */
+    .list{display:grid; gap:.6rem}
+    .li{
+      display:flex; gap:.75rem; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem;
+    }
+    .li i{margin-top:.35rem; min-width:8px; min-height:8px; border-radius:99px; background:var(--primary)}
+    /* Projects */
+    .grid{display:grid; gap:1rem}
+    @media(min-width:720px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media(min-width:1120px){ .grid{grid-template-columns:repeat(4,1fr)} }
+    .card{
+      position:relative; overflow:hidden; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.1rem; transition:transform .25s ease, box-shadow .25s ease;
+      box-shadow:0 0 0 rgba(0,0,0,0);
+    }
+    .card:hover{transform:translateY(-6px); box-shadow:var(--shadow)}
+    .card::after{
+      content:\"\"; position:absolute; inset:0; background:linear-gradient(45deg, transparent, color-mix(in oklab, var(--primary) 12%, transparent));
+      opacity:0; transition:opacity .25s ease; pointer-events:none;
+    }
+    .card:hover::after{opacity:1}
+    .badge{display:inline-block; background:rgba(255,255,255,.04); color:var(--text-dim); padding:.25rem .5rem; border-radius:8px; font-size:.75rem; border:1px solid var(--border)}
+    /* Education cards */
+    .edu{display:grid; gap:.8rem}
+    .edu .e{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem}
+    /* Contact */
+    .contact{display:grid; gap:.8rem}
+    @media(min-width:640px){ .contact{grid-template-columns:repeat(2,1fr)} }
+    .contact a{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem}
+    .label{color:var(--text-dim); font-size:.9rem}
+    footer{border-top:1px solid var(--border); padding-block:1.2rem; color:var(--text-dim)}
+   </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" aria-label="Main">
+      <a href="#home" class="brand">
+        <span class="dot"><span></span></span>
+        <span>Shruti Pandey</span>
+      </a>
+      <nav class="links" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Portfolio</div>
+        <h1>Hi, I’m <span style="color:var(--primary)">Shruti Pandey</span> —<br> a passionate Web Developer (Fresher)</h1>
+        <p class="lede">
+          I build clean, responsive, and modern websites. I’m currently learning and improving every day,
+          aiming to start my career as a professional Web Developer.
         </p>
-    </body>
+        <div class="cta">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn" href="#contact">Contact Me</a>
+        </div>
+      </div>
+
+      <div class="portrait-wrap" aria-label="Portrait of Shruti Pandey">
+        <div class="portrait-glow" aria-hidden="true"></div>
+        <div class="portrait">
+          <img
+            src="https://i.postimg.cc/cCN6n68R/Whats-App-Image-2025-09-11-at-1-39-16-AM-1.jpg"
+            alt="Shruti Pandey portrait in a circular frame"
+          />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section id="about" class="container">
+    <h2 class="section-title">About Me</h2>
+    <p class="muted" style="max-width:70ch">
+      Hello! I’m <strong>Shruti Pandey</strong>, a fresher currently pursuing my graduation (Secondary).
+      I completed my 12th with 72% and 10th with 70%. I am passionate about Web Development and
+      currently learning how to build modern and responsive websites. My aim is to keep improving my
+      skills and start my career as a professional Web Developer.
+    </p>
+  </section>
+
+  <section id="skills" class="band">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills">
+        <div class="chip">HTML</div>
+        <div class="chip">CSS</div>
+        <div class="chip">JavaScript (Basic)</div>
+        <div class="chip">Responsive Design</div>
+        <div class="chip">Git (Basic)</div>
+        <div class="chip">GitHub (Basic)</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements" class="container">
+    <h2 class="section-title">Achievements</h2>
+    <div class="list">
+      <div class="li"><i></i><span>Completed 12th with 72%</span></div>
+      <div class="li"><i></i><span>Completed 10th with 70%</span></div>
+      <div class="li"><i></i><span>Started Learning Web Development</span></div>
+      <div class="li"><i></i><span>Built small beginner projects while learning</span></div>
+    </div>
+  </section>
+
+  <section id="projects" class="band">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1rem">
+        <h2 class="section-title" style="margin:0">Projects</h2>
+        <p class="muted" style="font-size:.9rem">Hover cards for details</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3 style="margin:0 0 .35rem; font-size:1.05rem">Portfolio Website</h3>
+          <p class="muted" style="margin:.25rem 0 .75rem">A clean personal website to showcase my skills and journey.</p>
+          <span class="badge">HTML</span> <span class="badge">CSS</span>
+        </article>
+        <article class="card">
+          <h3 style="margin:0 0 .35rem; font-size:1.05rem">Simple Calculator</h3>
+          <p class="muted" style="margin:.25rem 0 .75rem">A basic calculator interface with neat layout.</p>
+          <span class="badge">HTML</span> <span class="badge">CSS</span>
+        </article>
+        <article class="card">
+          <h3 style="margin:0 0 .35rem; font-size:1.05rem">Todo List App</h3>
+          <p class="muted" style="margin:.25rem 0 .75rem">A minimal to-do list UI with states.</p>
+          <span class="badge">HTML</span> <span class="badge">CSS</span>
+        </article>
+        <article class="card">
+          <h3 style="margin:0 0 .35rem; font-size:1.05rem">Weather App (using API)</h3>
+          <p class="muted" style="margin:.25rem 0 .75rem">A weather UI layout designed for API data.</p>
+          <span class="badge">HTML</span> <span class="badge">CSS</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="container">
+    <h2 class="section-title">Education</h2>
+    <div class="edu">
+      <div class="e">
+        <h3 style="margin:.1rem 0 .25rem; font-size:1rem">Currently Pursuing Graduation (Secondary)</h3>
+        <p class="muted" style="margin:0">Actively learning Web Development and building projects.</p>
+      </div>
+      <div class="e"><h3 style="margin:0; font-size:1rem">12th Passed – 72%</h3></div>
+      <div class="e"><h3 style="margin:0; font-size:1rem">10th Passed – 70%</h3></div>
+    </div>
+  </section>
+
+  <section id="contact" class="band">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact">
+        <a href="shrutipanday2476gmail.com">
+          <div class="label">Email</div>
+          <div style="margin-top:.25rem; font-weight:600">shrutipanday2476gmail.com</div>
+        </a>
+        <a href="tel:+919569082476">
+          <div class="label">Phone</div>
+          <div style="margin-top:.25rem; font-weight:600">+91-9569082476</div>
+        </a>
+      </div>
+      <p class="muted" style="margin-top:1rem; font-size:.9rem">
+        please give me ek accha sa portfolio jisme sirf html or css ka use hua ho
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap">
+      <p>© <span id="y">2025</span> Shruti Pandey. All rights reserved.</p>
+      <a href="#home" class="btn" style="padding:.5rem .75rem">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
